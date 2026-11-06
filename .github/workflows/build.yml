@@ -1,0 +1,41 @@
+# Builds the engine with a pinned Emscripten, plays it through test/uci.test.cjs,
+# and commits dist/ back to main when the output changed. jsDelivr serves the
+# committed files, so a commit or tag of this repo is a pinned engine URL:
+#   https://cdn.jsdelivr.net/gh/VibesDIY/fairy-stockfish-single@<tag-or-sha>/dist/fairy-stockfish.js
+name: build
+
+on:
+  push:
+    branches: [main]
+    paths-ignore: ["dist/**", "**.md"]
+  pull_request:
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: mymindstorm/setup-emsdk@v14
+        with:
+          version: 3.1.74
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: ./build.sh
+      - run: node test/uci.test.cjs
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dist
+          path: dist/
+      - name: Commit dist to main
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        run: |
+          git add dist
+          if git diff --cached --quiet; then echo "dist unchanged"; exit 0; fi
+          git -c user.name="fairy-stockfish-single-build[bot]" -c user.email="noreply@vibes.diy" \
+            commit -m "build: dist from ${GITHUB_SHA::7}"
+          git push
