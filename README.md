@@ -57,8 +57,9 @@ castling = false
 extinctionValue = loss
 extinctionPieceTypes = *
 flagPiece = p
-whiteFlag = *8
-blackFlag = *1
+flagRegionWhite = *8
+flagRegionBlack = *1
+promotionPieceTypes = q
 ` });
 engine.postMessage("setoption name UCI_Variant value pawnwars");
 engine.postMessage("position startpos");
