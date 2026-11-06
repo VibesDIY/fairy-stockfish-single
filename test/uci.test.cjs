@@ -60,6 +60,9 @@ function bestmove(out) {
   const pw = bestmove(send("go depth 4"));
   assert.match(pw, /^b7b8/, "White runs the b-pawn home and wins");
   console.log("pawnwars:", pw);
+  // The pawn arrives as a queen, the flag piece, so the game is over: no move for Black.
+  send("position fen 8/1P6/8/8/8/8/6p1/8 w - - 0 1 moves b7b8q");
+  assert.strictEqual(bestmove(send("go depth 2")), "(none)", "reaching the far rank wins Pawn Wars");
 
   const t0 = Date.now();
   const inf = send("go infinite");
