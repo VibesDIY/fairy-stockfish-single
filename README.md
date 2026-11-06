@@ -2,7 +2,7 @@
 
 [Fairy-Stockfish](https://github.com/fairy-stockfish/Fairy-Stockfish), the chess-variant engine, compiled to **single-threaded WebAssembly**. It runs in an ordinary Web Worker on any web page, with no special server headers.
 
-It plays everything Fairy-Stockfish plays: standard chess, Chess960, atomic, crazyhouse, antichess, horde, three-check, King of the Hill, 5x5 Gardner and 6x6 Los Alamos minichess, shogi, xiangqi, and about 130 more. It also plays **variants you write yourself** in a few lines of ini, such as Pawn Wars ([example/pawnwars.ini](example/pawnwars.ini)).
+It plays everything Fairy-Stockfish plays: standard chess, Chess960, atomic, crazyhouse, antichess, horde, three-check, King of the Hill, 5x5 Gardner and 6x6 Los Alamos minichess, shogi, xiangqi, and over a hundred more (121 built in). It also plays **variants you write yourself** in a few lines of ini, such as Pawn Wars ([example/pawnwars.ini](example/pawnwars.ini)).
 
 We built it for [Vibes DIY](https://vibes.diy), where people make small web apps by describing them, so a chess club can ask for its own odd little game and get a computer opponent that knows the rules.
 
