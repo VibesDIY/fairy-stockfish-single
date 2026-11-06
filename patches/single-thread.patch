@@ -132,6 +132,22 @@ diff -ruN a/src/thread_win32_osx.h b/src/thread_win32_osx.h
  
  #include <pthread.h>
  
+diff -ruN a/src/tt.cpp b/src/tt.cpp
+--- a/src/tt.cpp	2026-11-06 15:59:09.130168858 +0000
++++ b/src/tt.cpp	2026-11-06 17:16:35.991579587 +0000
+@@ -85,6 +85,12 @@
+ 
+ void TranspositionTable::clear() {
+ 
++#ifdef SINGLE_THREAD
++  // No helper threads can start here: zero the table on the calling thread.
++  std::memset(table, 0, clusterCount * sizeof(Cluster));
++  return;
++#endif
++
+   std::vector<std::thread> threads;
+ 
+   for (size_t idx = 0; idx < Options["Threads"]; ++idx)
 diff -ruN a/src/uci.cpp b/src/uci.cpp
 --- a/src/uci.cpp	2026-11-06 15:59:09.130764505 +0000
 +++ b/src/uci.cpp	2026-11-06 16:04:55.645521399 +0000

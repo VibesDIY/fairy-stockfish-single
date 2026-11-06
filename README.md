@@ -91,6 +91,7 @@ What the patch does:
 | --- | --- |
 | `thread_win32_osx.h` | `NativeThread` becomes an empty class, so no OS thread is created |
 | `thread.cpp` | `start_searching()` runs the search on the caller's stack and returns when it ends |
+| `tt.cpp` | `clear()` zeroes the hash table on the calling thread instead of starting helper threads |
 | `search.cpp` | skips the busy-wait for a `stop` that can never arrive during a search |
 | `uci.cpp` | keeps the position between calls, runs one command per call, and limits an open-ended `go` to 2 s |
 | `main.cpp` | exports `fsf_command(line)`, the WebAssembly entry point, and leaves the engine running after `main()` |
